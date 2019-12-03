@@ -17,7 +17,6 @@ namespace Master
                 Console.WriteLine(GetPersonInformationAsFormattedString(person));
             }
         }
-
         public static string GetPersonInformationAsFormattedString(Person person)
         {
             StringBuilder sb = new StringBuilder();
