@@ -72,7 +72,7 @@ namespace Master
             sb.AppendLine("Name: " + person.Name);
             sb.AppendLine("Surname: " + person.Surname);
             sb.AppendLine("Start Date: " + person.StartDate.ToShortDateString());
-            sb.AppendLine("Surname: " + person.Rating);
+            sb.AppendLine("Rating: " + person.Rating);
             if (!String.IsNullOrWhiteSpace(person.FormatString))
                 sb.AppendLine("Format String: " + person.FormatString);
 
