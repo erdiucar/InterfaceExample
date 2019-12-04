@@ -9,63 +9,50 @@ namespace Master
     {
         static void Main(string[] args)
         {
-            RepositoryType? selectedRepositoryType = TryToGetRepositoryTypeFromUser();
-            ShowPeople(selectedRepositoryType);
-        }
-
-        private static RepositoryType? TryToGetRepositoryTypeFromUser()
-        {
-            bool isSelectedRepositoryChoiceValid = false;
-            RepositoryType? repositoryType;
-            do
-            {
-                AskUserToChooseRepository();
-
-                repositoryType = GetSelectedRepositoryTypeChoiceFromUser();
-
-                if (repositoryType.HasValue)
-                {
-                    isSelectedRepositoryChoiceValid = Enum.IsDefined(typeof(RepositoryType), repositoryType);
-                }
-            } while (!isSelectedRepositoryChoiceValid);
-            return repositoryType;
-        }
-
-        private static void ShowPeople(RepositoryType? repositoryType)
-        {
-            IPersonRepository repository = RepositoryFactory.GetRepository(repositoryType);
+            RepositoryType selectedRepositoryType = GetSelectedRepositoryTypeFromUser();
 
             try
             {
-                var people = repository.GetPeople();
-
-                foreach (var person in people)
-                {
-                    Console.WriteLine(GetPersonInformationAsStringFormat(person));
-                }
+                ShowPeople(selectedRepositoryType);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message); 
             }
         }
 
-        private static RepositoryType? GetSelectedRepositoryTypeChoiceFromUser()
+        private static RepositoryType GetSelectedRepositoryTypeFromUser()
         {
-            try
+            while (true)
             {
-                RepositoryType? choiseOfUser = (RepositoryType)Convert.ToInt32(Console.ReadLine());
-                return choiseOfUser;
-            }
-            catch (FormatException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+                try
+                {
+                    AskUserToChooseRepositoryType();
+                    RepositoryType selectedRepositoryType = (RepositoryType)Convert.ToInt32(Console.ReadLine());
+                    bool isSelectedRepositoryChoiceValid = Enum.IsDefined(typeof(RepositoryType), selectedRepositoryType);
 
-            return null;
+                    if (isSelectedRepositoryChoiceValid)
+                        return selectedRepositoryType;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
         }
 
-        private static void AskUserToChooseRepository()
+        private static void ShowPeople(RepositoryType repositoryType)
+        {
+            var repository = RepositoryFactory.GetRepository(repositoryType);
+            var people = repository.GetPeople();
+
+            foreach (var person in people)
+            {
+                Console.WriteLine(GetPersonInformationAsStringFormat(person));
+            }
+        }
+
+        private static void AskUserToChooseRepositoryType()
         {
             StringBuilder sb = new StringBuilder();
 
