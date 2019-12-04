@@ -1,5 +1,5 @@
 ﻿using PersonRepository.Interface;
-using PersonRepository.Service;
+using PersonRepository.Factory;
 using System;
 using System.Text;
 
@@ -9,15 +9,63 @@ namespace Master
     {
         static void Main(string[] args)
         {
-            IPersonRepository repository = new ServiceRepository();
+            bool isSelectedRepositoryChoiceValid = false;
+            RepositoryType? selectedRepositoryType;
+            do
+            {
+                AskUserToChooseRepository();
+
+                selectedRepositoryType = GetSelectedRepositoryTypeChoiceFromUser();
+
+                if (selectedRepositoryType.HasValue)
+                {
+                    isSelectedRepositoryChoiceValid = Enum.IsDefined(typeof(RepositoryType), selectedRepositoryType);
+                }
+            } while (!isSelectedRepositoryChoiceValid);
+
+            ShowPeople(selectedRepositoryType);
+        }
+
+        private static void ShowPeople(RepositoryType? repositoryType)
+        {
+            IPersonRepository repository = RepositoryFactory.GetRepository(repositoryType);
+
             var people = repository.GetPeople();
 
             foreach (var person in people)
             {
-                Console.WriteLine(GetPersonInformationAsFormattedString(person));
+                Console.WriteLine(GetPersonInformationAsStringFormat(person));
             }
         }
-        public static string GetPersonInformationAsFormattedString(Person person)
+
+        private static RepositoryType? GetSelectedRepositoryTypeChoiceFromUser()
+        {
+            try
+            {
+                RepositoryType? choiseOfUser = (RepositoryType)Convert.ToInt32(Console.ReadLine());
+                return choiseOfUser;
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return null;
+        }
+
+        private static void AskUserToChooseRepository()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine("Choose a repository type to get data:");
+            sb.AppendLine("1. CSV");
+            sb.AppendLine("2. Service");
+            sb.AppendLine("3. SQL");
+
+            Console.WriteLine(sb.ToString());
+        }
+
+        public static string GetPersonInformationAsStringFormat(Person person)
         {
             StringBuilder sb = new StringBuilder();
 
