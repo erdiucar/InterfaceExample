@@ -2,6 +2,7 @@
 using PersonRepository.Factory;
 using System;
 using System.Text;
+using System.Collections.Generic;
 
 namespace Master
 {
@@ -43,8 +44,8 @@ namespace Master
 
         private static void ShowPeople(RepositoryType repositoryType)
         {
-            var repository = RepositoryFactory.GetRepository(repositoryType);
-            var people = repository.GetPeople();
+            IPersonRepository repository = RepositoryFactory.GetRepository(repositoryType);
+            IEnumerable<Person> people = repository.GetPeople();
 
             foreach (var person in people)
             {
