@@ -2,6 +2,7 @@
 using PersonRepository.Factory;
 using System;
 using System.Text;
+using System.Collections.Generic;
 
 namespace Master
 {
@@ -30,11 +31,18 @@ namespace Master
         {
             IPersonRepository repository = RepositoryFactory.GetRepository(repositoryType);
 
-            var people = repository.GetPeople();
-
-            foreach (var person in people)
+            try
             {
-                Console.WriteLine(GetPersonInformationAsStringFormat(person));
+                var people = repository.GetPeople();
+
+                foreach (var person in people)
+                {
+                    Console.WriteLine(GetPersonInformationAsStringFormat(person));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -45,9 +53,9 @@ namespace Master
                 RepositoryType? choiseOfUser = (RepositoryType)Convert.ToInt32(Console.ReadLine());
                 return choiseOfUser;
             }
-            catch (FormatException e)
+            catch (FormatException ex)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine(ex.Message);
             }
 
             return null;
