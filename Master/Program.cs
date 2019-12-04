@@ -2,7 +2,6 @@
 using PersonRepository.Factory;
 using System;
 using System.Text;
-using System.Collections.Generic;
 
 namespace Master
 {
@@ -10,21 +9,26 @@ namespace Master
     {
         static void Main(string[] args)
         {
+            RepositoryType? selectedRepositoryType = TryToGetRepositoryTypeFromUser();
+            ShowPeople(selectedRepositoryType);
+        }
+
+        private static RepositoryType? TryToGetRepositoryTypeFromUser()
+        {
             bool isSelectedRepositoryChoiceValid = false;
-            RepositoryType? selectedRepositoryType;
+            RepositoryType? repositoryType;
             do
             {
                 AskUserToChooseRepository();
 
-                selectedRepositoryType = GetSelectedRepositoryTypeChoiceFromUser();
+                repositoryType = GetSelectedRepositoryTypeChoiceFromUser();
 
-                if (selectedRepositoryType.HasValue)
+                if (repositoryType.HasValue)
                 {
-                    isSelectedRepositoryChoiceValid = Enum.IsDefined(typeof(RepositoryType), selectedRepositoryType);
+                    isSelectedRepositoryChoiceValid = Enum.IsDefined(typeof(RepositoryType), repositoryType);
                 }
             } while (!isSelectedRepositoryChoiceValid);
-
-            ShowPeople(selectedRepositoryType);
+            return repositoryType;
         }
 
         private static void ShowPeople(RepositoryType? repositoryType)
