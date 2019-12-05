@@ -6,7 +6,7 @@ using System.Net;
 
 namespace PersonRepository.Service
 {
-    public class ServiceRepository : IPersonRepository
+    public class ServiceRepository : IPersonReader
     {
         WebClient client = new WebClient();
         string baseUri = "http://localhost:9874/people";
@@ -17,26 +17,6 @@ namespace PersonRepository.Service
             IEnumerable<Person> people =
                 JsonConvert.DeserializeObject<IEnumerable<Person>>(result);
             return people;
-        }
-
-        public Person GetPerson(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddPerson(Person newPerson)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdatePerson(int id, Person updatedPerson)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeletePerson(int id)
-        {
-            throw new NotImplementedException();
         }
     }
 }

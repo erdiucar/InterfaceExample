@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace PersonRepository.CSV
 {
-    public class CSVRepository : IPersonRepository
+    public class CSVRepository : IPersonReader
     {
         string path;
 

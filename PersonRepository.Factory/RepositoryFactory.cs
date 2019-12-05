@@ -8,9 +8,9 @@ namespace PersonRepository.Factory
 {
     public static class RepositoryFactory
     {
-        public static IPersonRepository GetRepository(RepositoryType repositoryType)
+        public static IPersonReader GetRepository(RepositoryType repositoryType)
         {
-            IPersonRepository repository;
+            IPersonReader repository;
 
             switch (repositoryType)
             {

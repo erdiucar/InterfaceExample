@@ -44,7 +44,7 @@ namespace Master
 
         private static void ShowPeople(RepositoryType repositoryType)
         {
-            IPersonRepository repository = RepositoryFactory.GetRepository(repositoryType);
+            IPersonReader repository = RepositoryFactory.GetRepository(repositoryType);
             IEnumerable<Person> people = repository.GetPeople();
 
             foreach (var person in people)

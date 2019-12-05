@@ -3,10 +3,8 @@ using System.Collections.Generic;
 
 namespace PersonRepository.Interface
 {
-    public interface IPersonRepository
+    public interface IPersonRepository : IPersonReader
     {
-        IEnumerable<Person> GetPeople();
-
         Person GetPerson(int id);
 
         void AddPerson(Person newPerson);
