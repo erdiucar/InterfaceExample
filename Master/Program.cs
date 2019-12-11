@@ -10,7 +10,7 @@ namespace Master
     {
         static void Main(string[] args)
         {
-            RepositoryType selectedRepositoryType = GetSelectedRepositoryTypeFromUser();
+            RepositoryType selectedRepositoryType = GetARepositoryTypeFromUser();
 
             try
             {
@@ -18,21 +18,27 @@ namespace Master
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message); 
             }
         }
 
-        private static RepositoryType GetSelectedRepositoryTypeFromUser()
+        private static RepositoryType GetARepositoryTypeFromUser()
         {
             while (true)
             {
-                AskUserToChooseRepositoryType();
+                try
+                {
+                    AskUserToChooseARepositoryType();
+                    RepositoryType selectedRepositoryType = (RepositoryType)Convert.ToInt32(Console.ReadLine());
+                    bool isSelectedRepositoryChoiceValid = Enum.IsDefined(typeof(RepositoryType), selectedRepositoryType);
 
-                RepositoryType selectedRepositoryType;
-                bool isSelectedRepositoryChoiceValid = Enum.TryParse(Console.ReadLine(), out selectedRepositoryType);
-
-                if (isSelectedRepositoryChoiceValid)
-                    return selectedRepositoryType;
+                    if (isSelectedRepositoryChoiceValid)
+                        return selectedRepositoryType;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
 
@@ -43,11 +49,11 @@ namespace Master
 
             foreach (var person in people)
             {
-                Console.WriteLine(GetPersonInformationAsStringFormat(person));
+                Console.WriteLine(GetPersonInformation(person));
             }
         }
 
-        private static void AskUserToChooseRepositoryType()
+        private static void AskUserToChooseARepositoryType()
         {
             StringBuilder sb = new StringBuilder();
 
@@ -59,7 +65,7 @@ namespace Master
             Console.WriteLine(sb.ToString());
         }
 
-        public static string GetPersonInformationAsStringFormat(Person person)
+        public static string GetPersonInformation(Person person)
         {
             StringBuilder sb = new StringBuilder();
 
