@@ -29,9 +29,11 @@ namespace Master
                 AskUserToChooseARepositoryType();
 
                 RepositoryType selectedRepositoryType;
-                bool isSelectedRepositoryChoiceValid = Enum.TryParse(Console.ReadLine(), out selectedRepositoryType);
 
-                if (isSelectedRepositoryChoiceValid)
+                bool isSelectedRepositoryTypeParsed = Enum.TryParse(Console.ReadLine(), out selectedRepositoryType);
+                bool isSelectedRepositoryTypeDefined = Enum.IsDefined(typeof(RepositoryType), selectedRepositoryType);
+
+                if (isSelectedRepositoryTypeParsed && isSelectedRepositoryTypeDefined)
                     return selectedRepositoryType;
             }
         }
