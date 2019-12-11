@@ -18,7 +18,7 @@ namespace Master
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message); 
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -26,19 +26,13 @@ namespace Master
         {
             while (true)
             {
-                try
-                {
-                    AskUserToChooseRepositoryType();
-                    RepositoryType selectedRepositoryType = (RepositoryType)Convert.ToInt32(Console.ReadLine());
-                    bool isSelectedRepositoryChoiceValid = Enum.IsDefined(typeof(RepositoryType), selectedRepositoryType);
+                AskUserToChooseRepositoryType();
 
-                    if (isSelectedRepositoryChoiceValid)
-                        return selectedRepositoryType;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+                RepositoryType selectedRepositoryType;
+                bool isSelectedRepositoryChoiceValid = Enum.TryParse(Console.ReadLine(), out selectedRepositoryType);
+
+                if (isSelectedRepositoryChoiceValid)
+                    return selectedRepositoryType;
             }
         }
 
